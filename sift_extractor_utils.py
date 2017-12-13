@@ -1,8 +1,12 @@
+import itertools
+import numpy
 import cv2
 
 sift = cv2.SIFT()
-kps = [cv2.KeyPoint(7, 7, 1), cv2.KeyPoint(7, 15, 1), cv2.KeyPoint(15, 7, 1), cv2.KeyPoint(15, 15, 1)]
-
+colIndx = numpy.arange(7, 31, 7)
+rowIndx = numpy.arange(7, 31, 7)
+coordinates = list(itertools.product(colIndx, rowIndx))
+kps = [cv2.KeyPoint(i, j, 1) for (i, j) in coordinates]
 
 # dense-sift
 def extract_sift(img):
@@ -13,3 +17,20 @@ def extract_sift(img):
 
 def concat_sifts(sift):
     return [item for sublist in sift for item in sublist]
+
+
+# def display_kps(img):
+#     gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+#     # kp = sift.detect(gray, None)
+#     img2 = cv2.drawKeypoints(gray, kps)
+#     cv2.imwrite('sift_keypoints_before.jpg', img)
+#     cv2.imwrite('sift_keypoints.jpg', img2)
+#
+#
+# import dataloader
+#
+# pickle = dataloader.get_pickle(0)
+# data = pickle[0]
+# datum = data[0]
+#
+# display_kps(datum)

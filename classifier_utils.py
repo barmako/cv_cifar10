@@ -1,6 +1,10 @@
 from sklearn import svm
+# from sklearn.ensemble import RandomForestClassifier
+# from sklearn.ensemble import ExtraTreesClassifier
 
 clf = svm.LinearSVC()
+
+# clf = ExtraTreesClassifier()
 
 
 def init(data, labels):
@@ -9,12 +13,3 @@ def init(data, labels):
 
 def classify(data):
     return clf.predict(data)
-
-
-def get_classifier(data, labels):
-    return fit_svm_model(data, labels)
-
-
-def fit_svm_model(data, labels):
-    clf = svm.SVC()
-    return clf.fit(data, labels)
