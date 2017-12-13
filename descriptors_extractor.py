@@ -2,7 +2,7 @@ from sklearn.decomposition import PCA
 
 import sift_extractor_utils as sift
 
-pca = PCA(n_components=128)
+pca = PCA(n_components=256)
 
 
 def initialize(data):
