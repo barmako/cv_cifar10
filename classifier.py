@@ -6,48 +6,23 @@ pickle1 = dl.get_pickle(0)
 data = pickle1[0]
 labels = pickle1[1]
 
-
-# print "sifting"
-# descriptors = []
-# for datum in data:
-#     sift = seu.extract_sift(datum)
-#     if sift is not None:
-#         flat_sift = seu.concat_sifts(sift)
-#         descriptors.append(np.array(flat_sift))
-
-
-def flat_image(img):
-    flat_img = []
-    for row in img:
-        for pixel in row:
-            for channel in pixel:
-                flat_img.append(channel)
-    return flat_img
-
-
-def flat_raw(data):
-    flatted_data = []
-    for img in data:
-        flatted_data.append(flat_image(img))
-    return flatted_data
-
-
-flat_data = flat_raw(data)
-
-print "pcaing"
-de.initialize(flat_data)
-descriptors = de.extract(flat_data)
+print "extracting descriptors"
+de.initialize(data)
+descriptors = de.extract(data)
+print "done"
 
 print "svming"
 cu.init(descriptors, labels)
+print "done"
 
+print "loading test data"
 pickle = dl.get_test_pickle()
 test_data = pickle[0]
 test_labels = pickle[1]
 
 print "classifying test data of size "
 print len(test_data)
-test_data_desc = de.extract(flat_raw(test_data))
+test_data_desc = de.extract(test_data)
 results = cu.classify(test_data_desc)
 
 print "validating results "

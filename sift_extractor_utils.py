@@ -1,15 +1,13 @@
 import cv2
 
 sift = cv2.SIFT()
+kps = [cv2.KeyPoint(7, 7, 1), cv2.KeyPoint(7, 15, 1), cv2.KeyPoint(15, 7, 1), cv2.KeyPoint(15, 15, 1)]
 
 
-
-# This can be replaced with dense-sift
+# dense-sift
 def extract_sift(img):
     gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-    # kp = sift.detect(gray, None)
-    # kp, des = sift.compute(gray, kp)
-    kp, des = sift.detectAndCompute(gray, None)
+    kp, des = sift.compute(gray, kps)
     return des
 
 
