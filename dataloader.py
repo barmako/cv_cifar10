@@ -1,3 +1,6 @@
+import numpy as np
+
+
 def unpickle(file):
     import cPickle
     with open(file, 'rb') as fo:
@@ -18,4 +21,9 @@ def get_pickle_path(index):
 
 
 def get_pickle(index):
-    return unpickle(get_pickle_path(index))
+    unpickled = unpickle(get_pickle_path(index))
+    datas = unpickled['data']
+    labels = unpickled['labels']
+    datas = datas.reshape(10000, 3, 32, 32).transpose(0, 2, 3, 1).astype("uint8")
+    labels = np.array(labels)
+    return (datas, labels)
