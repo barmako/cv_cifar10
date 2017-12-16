@@ -31,5 +31,17 @@ def get_pickle(index):
     return (datas, labels)
 
 
+def get_all():
+    res_data = []
+    res_labels = []
+    for i in range(0, 5):
+        pickle = get_pickle(i)
+        data = pickle[0]
+        res_data.extend(data)
+        label = pickle[1]
+        res_labels.extend(label)
+    return [res_data, res_labels]
+
+
 def get_test_pickle():
     return get_pickle(-1)

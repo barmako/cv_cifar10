@@ -4,8 +4,8 @@ import cv2
 import numpy
 
 sift = cv2.SIFT()
-colIndx = numpy.arange(7, 31, 15)
-rowIndx = numpy.arange(7, 31, 15)
+colIndx = numpy.arange(5, 31, 12)
+rowIndx = numpy.arange(5, 31, 12)
 coordinates = list(itertools.product(colIndx, rowIndx))
 kps = [cv2.KeyPoint(i, j, 16) for (i, j) in coordinates]
 

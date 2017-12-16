@@ -1,3 +1,5 @@
+from sklearn.metrics import confusion_matrix
+
 import classifier_utils as cu
 import dataloader as dl
 import descriptors_extractor as de
@@ -34,3 +36,6 @@ print "success rate"
 test_data_count = len(test_data)
 suc_rate = (test_data_count - errors_count) * 1.0 / test_data_count
 print suc_rate * 100
+
+print "confusion matrix"
+print confusion_matrix(test_labels, results)
