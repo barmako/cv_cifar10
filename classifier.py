@@ -4,16 +4,19 @@ import classifier_utils as cu
 import dataloader as dl
 import descriptors_extractor as de
 
-pickle1 = dl.get_pickle(0)
+print "loading train data"
+pickle1 = dl.get_all()
 data = pickle1[0]
 labels = pickle1[1]
+print "train samples"
+print len(data)
 
 print "extracting descriptors"
 de.initialize(data)
 descriptors = de.extract(data)
 print "done"
 
-print "svming"
+print "training SVM (clustering) on train data"
 cu.init(descriptors, labels)
 print "done"
 
