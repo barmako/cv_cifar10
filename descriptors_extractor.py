@@ -1,15 +1,45 @@
+import numpy as np
+from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 
 import sift_extractor_utils as sift
 
+feature_size = 1000
 pca = PCA(n_components=256)
+kmeans = KMeans(n_clusters=feature_size, random_state=0)
+
+kmeans_model = None
 
 
 def initialize(data):
-    sifted = [sift.concat_sifts(sift.extract_sift(item)) for item in data]
-    pca.fit(sifted)
+    global kmeans_model
+
+    sifts = get_sifts(data)
+    kmeans_model = kmeans.fit(sifts)
+
+
+def get_sifts(data):
+    sift_array_array = [sift.extract_sift(img) for img in data]
+    sifts = []
+    for sift_array in sift_array_array:
+        for single_sift in sift_array:
+            sifts.append(single_sift)
+    return sifts
 
 
 def extract(data):
-    sifted = [sift.concat_sifts(sift.extract_sift(item)) for item in data]
-    return pca.transform(sifted)
+    extracted = [get_image_descriptor(image) for image in data]
+    return extracted
+
+
+def get_image_descriptor(image):
+    image_desc = np.zeros(feature_size)
+    image_sifts = sift.extract_sift(image)
+    words = kmeans_model.predict(image_sifts)
+    for word in words:
+        image_desc[word] = image_desc[word] + 1
+    return image_desc
+
+
+def __extract_flat_sift(data):
+    return [sift.concat_sifts(sift.extract_sift(item)) for item in data]
