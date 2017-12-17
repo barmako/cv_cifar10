@@ -3,9 +3,11 @@ import itertools
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 # def plot(cm):
-    # plot_confusion_matrix(cm, )
+# plot_confusion_matrix(cm, )
+
+
+classes = ['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
 
 def plot_confusion_matrix(cm, classes,
