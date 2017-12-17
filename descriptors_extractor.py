@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn.cluster import MiniBatchKMeans
 from sklearn.decomposition import PCA
+import random
 
 import sift_extractor_utils as sift
 
@@ -17,7 +18,9 @@ def initialize(data):
     print "sifting "
     sifts = get_sifts(data)
     print "sift quantization for BOVW dictionary"
-    kmeans_model = kmeans.fit(sifts)
+    kmeans_train_size = 5000
+    rand_sub_sifts = random.sample(sifts, kmeans_train_size)
+    kmeans_model = kmeans.fit(rand_sub_sifts)
     # pca_model = pca.fit([get_image_descriptor(image) for image in data])
 
 
