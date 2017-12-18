@@ -8,7 +8,7 @@ from sklearn.ensemble import AdaBoostClassifier
 # clf = svm.SVC(cache_size=1000, kernel=chi2_kernel)
 clf = AdaBoostClassifier(DecisionTreeClassifier(), n_estimators=200)
 
-
+#
 # clf = ExtraTreesClassifier()
 # clf = svm.LinearSVC()
 
