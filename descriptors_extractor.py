@@ -5,9 +5,11 @@ import random
 
 import sift_extractor_utils as sift
 
-feature_size = 1000
+feature_size = 800
+print "BoW dictionary size: %s" % feature_size
 pca = PCA(n_components=256)
 kmeans = MiniBatchKMeans(n_clusters=feature_size, random_state=0)
+print "dictionary clustering done with %s" % kmeans
 
 kmeans_model = None
 pca_model = None

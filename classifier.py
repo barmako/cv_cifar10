@@ -8,8 +8,7 @@ print "loading train data"
 pickle1 = dl.get_all()
 data = pickle1[0]
 labels = pickle1[1]
-print "train samples"
-print len(data)
+print "# train samples: %s" % len(data)
 
 print "extracting descriptors"
 de.initialize(data)
