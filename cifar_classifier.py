@@ -1,7 +1,8 @@
+import random
+
 from sklearn.metrics import confusion_matrix
 
 import dataloader as dl
-import numpy as np
 
 
 class Classifier:
@@ -16,6 +17,7 @@ class Classifier:
         print "Preprocessing data"
         self.preprocessor.preprocess(raw_data)
         descriptors = self.preprocessor.get_descriptors(raw_data)
+        print "Example descriptor- %s" % random.sample(descriptors, 1)
 
         print "Training classifier"
         self.classifier.fit(descriptors, labels)
