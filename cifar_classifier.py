@@ -29,11 +29,12 @@ class Classifier:
         results = self.classifier.predict(test_descriptors)
 
         print "Validating results"
-        self.print_success_rate(results, test_data, test_labels)
+        suc_rate = self.print_success_rate(results, test_data, test_labels)
 
         print "confusion matrix"
         conf_matrix = confusion_matrix(test_labels, results)
         print conf_matrix
+        return suc_rate
 
     def print_success_rate(self, results, test_data, test_labels):
         errors_count = sum(i != j for i, j in zip(results, test_labels))
@@ -43,6 +44,7 @@ class Classifier:
         test_data_count = len(test_data)
         suc_rate = (test_data_count - errors_count) * 1.0 / test_data_count
         print suc_rate * 100
+        return suc_rate
 
     def load_training_data(self):
         print "loading train data"

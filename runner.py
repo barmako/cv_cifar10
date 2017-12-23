@@ -15,3 +15,8 @@ classifier5 = Classifier(SIFTBOWPreprocessor(n_words=400), linearSVM)  # 32.79
 classifier6 = Classifier(
     SIFTBOWPreprocessor(n_words=400, decorated=SIFTPreprocessor(concat=False, kps_idx=numpy.arange(4, 31, 4))),
     linearSVM)  #
+
+classifier7 = Classifier(
+    SIFTBOWPreprocessor(n_words=400,
+                        decorated=SIFTPreprocessor(concat=False, kps_idx=numpy.arange(2, 31, 2), sift_kp_size=4)),
+    linearSVM)  #

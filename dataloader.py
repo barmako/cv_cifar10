@@ -1,8 +1,8 @@
 import numpy as np
+import cPickle
 
 
 def unpickle(file):
-    import cPickle
     with open(file, 'rb') as fo:
         dict = cPickle.load(fo)
     return dict
@@ -24,11 +24,11 @@ def get_pickle_path(index):
 
 def get_pickle(index):
     unpickled = unpickle(get_pickle_path(index))
-    datas = unpickled['data']
+    data = unpickled['data']
     labels = unpickled['labels']
-    datas = datas.reshape(10000, 3, 32, 32).transpose(0, 2, 3, 1).astype("uint8")
+    data = data.reshape(10000, 3, 32, 32).transpose(0, 2, 3, 1).astype("uint8")
     labels = np.array(labels)
-    return (datas, labels)
+    return data, labels
 
 
 def get_all():
