@@ -3,16 +3,23 @@ import random
 from sklearn.metrics import confusion_matrix
 
 import dataloader as dl
+from augmentator import Augmentator
 
 
 class Classifier:
-    def __init__(self, preprocessor, classifier):
+    def __init__(self, preprocessor, classifier, augment=False):
         self.preprocessor = preprocessor
         self.classifier = classifier
+        self.augment = augment
 
     def run(self):
         print "Running classifier"
         raw_data, labels = self.load_training_data()
+        if self.augment:
+            print "Augmenting data"
+            aug_data, new_labels = Augmentator().flip_augment(raw_data, labels)
+            raw_data.extend(aug_data)
+            labels.extend(new_labels)
 
         print "Preprocessing data"
         self.preprocessor.preprocess(raw_data)
