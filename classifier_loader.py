@@ -11,7 +11,7 @@ def load():
     p = 'pickle.p'
     from_pickle = pickle.load(open(p, "rb"))
 
-    from_p_pre = SIFTBOWPreprocessor(n_words=300,
+    from_p_pre = SIFTBOWPreprocessor(n_words=2000,
                                      decorated=SIFTPreprocessor(concat=False, kps_idx=numpy.arange(2, 31, 4),
                                                                 sift_kp_size=8))
     from_p_pre.kmeans_model = from_pickle[0]
