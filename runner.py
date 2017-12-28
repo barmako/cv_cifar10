@@ -1,5 +1,6 @@
 from cifar_classifier import Classifier
 from SIFTPreprocessor import SIFTPreprocessor
+from BasePreprocessor import BasePreprocessor
 from BOWPreprocessor import SIFTBOWPreprocessor
 from sklearn import svm
 from sklearn.neighbors import KNeighborsClassifier
@@ -8,6 +9,8 @@ from sklearn.ensemble import AdaBoostClassifier
 import numpy
 
 linearSVM = svm.LinearSVC()
+
+base_classifier = Classifier(BasePreprocessor(), linearSVM)
 
 classifier = Classifier(SIFTPreprocessor(), linearSVM)  # 36.89
 classifier2 = Classifier(SIFTPreprocessor(8), linearSVM)  # 32.72
