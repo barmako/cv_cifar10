@@ -22,13 +22,24 @@ def get_pickle_path(index):
     return pickle_folder + '\\' + data_batches[index]
 
 
-def get_pickle(index):
-    unpickled = unpickle(get_pickle_path(index))
+def get_pickle_by_index(index):
+    path = get_pickle_path(index)
+    return get_pickle_by_path(path)
+
+
+def get_pickle_by_path(param):
+    unpickled = unpickle(param)
     data = unpickled['data']
     labels = unpickled['labels']
     data = data.reshape(10000, 3, 32, 32).transpose(0, 2, 3, 1).astype("uint8")
     labels = np.array(labels)
     return data, labels
+
+
+def get_pickle(param):
+    if isinstance(param, int):
+        return get_pickle_by_index(param)
+    return get_pickle_by_path(param)
 
 
 def get_all():

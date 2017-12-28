@@ -12,6 +12,7 @@ linearSVM = svm.LinearSVC()
 
 base_classifier = Classifier(BasePreprocessor(), linearSVM)
 
+
 classifier = Classifier(SIFTPreprocessor(), linearSVM)  # 36.89
 classifier2 = Classifier(SIFTPreprocessor(8), linearSVM)  # 32.72
 classifier3 = Classifier(SIFTBOWPreprocessor(), linearSVM)  # 36.31

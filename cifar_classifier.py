@@ -1,5 +1,7 @@
+# import cPickle
+import pickle
 import random
-
+import numpy as np
 from sklearn.metrics import confusion_matrix
 
 import dataloader as dl
@@ -7,7 +9,8 @@ from augmentator import Augmentator
 
 
 class Classifier:
-    def __init__(self, preprocessor, classifier, augment=False):
+    def __init__(self, preprocessor, classifier, augment=False, subsample_for_learning=None):
+        self.subsample_for_learning = subsample_for_learning
         self.preprocessor = preprocessor
         self.classifier = classifier
         self.augment = augment
@@ -15,6 +18,12 @@ class Classifier:
     def run(self):
         print "Running classifier"
         raw_data, labels = self.load_training_data()
+        if self.subsample_for_learning is not None:
+            zipped = zip(raw_data, labels)
+            random_sample = random.sample(zipped, self.subsample_for_learning)
+            raw_data, labels = zip(*random_sample)
+            raw_data = np.asarray(raw_data)
+            labels = np.asarray(labels)
         if self.augment:
             print "Augmenting data"
             aug_data, new_labels = Augmentator().flip_augment(raw_data, labels)
@@ -31,19 +40,26 @@ class Classifier:
 
         test_data, test_labels = self.load_test_data()
 
+        return self.predict(test_data, test_labels)
+
+    def predict(self, test_data, test_labels):
         print "Classifying test data"
         test_descriptors = self.preprocessor.get_descriptors(test_data)
         results = self.classifier.predict(test_descriptors)
 
         print "Validating results"
-        suc_rate = self.print_success_rate(results, test_data, test_labels)
+        suc_rate = self.calc_success_rate(results, test_data, test_labels)
 
         print "confusion matrix"
         conf_matrix = confusion_matrix(test_labels, results)
         print conf_matrix
-        return suc_rate
+        return results, conf_matrix, suc_rate
 
-    def print_success_rate(self, results, test_data, test_labels):
+    def predict_pickle(self, pickle_path):
+        data = dl.get_pickle_by_path(pickle_path)
+        return self.predict(data[0], data[1])
+
+    def calc_success_rate(self, results, test_data, test_labels):
         errors_count = sum(i != j for i, j in zip(results, test_labels))
         print "error count "
         print errors_count
@@ -68,3 +84,10 @@ class Classifier:
         test_labels = pickle[1]
         print "test data size: %s" % len(test_data)
         return test_data, test_labels
+
+    def save(self, path='trained_model.p'):
+        pickle.dump(self, open(path, "wb"))
+
+
+def load(pickle_path):
+    return pickle.load(open(pickle_path, "rb"))
